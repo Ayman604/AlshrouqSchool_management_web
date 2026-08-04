@@ -1,0 +1,94 @@
+<section class="page-section">
+  <div class="container">
+    <h1 class="page-title">📝 التسجيل</h1>
+    <p class="page-subtitle">املأ النموذج أدناه لتسجيل طفلك في مدرسة الشروق</p>
+
+    <div class="form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <label for="studentName" class="form-label">اسم الطالب</label>
+          <input
+            id="studentName"
+            type="text"
+            class="form-control"
+            formControlName="studentName"
+            [class.is-invalid]="isInvalid('studentName')"
+          />
+          @if (isInvalid('studentName')) {
+            <div class="invalid-feedback d-block">
+              @if (form.get('studentName')?.errors?.['required']) {
+                <span>اسم الطالب مطلوب.</span>
+              }
+              @if (form.get('studentName')?.errors?.['minlength']) {
+                <span>يجب أن يكون الاسم 3 أحرف على الأقل.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="parentPhone" class="form-label">رقم هاتف ولي الأمر</label>
+          <input
+            id="parentPhone"
+            type="tel"
+            class="form-control"
+            formControlName="parentPhone"
+            placeholder="01xxxxxxxxx"
+            [class.is-invalid]="isInvalid('parentPhone')"
+          />
+          @if (isInvalid('parentPhone')) {
+            <div class="invalid-feedback d-block">
+              @if (form.get('parentPhone')?.errors?.['required']) {
+                <span>رقم الهاتف مطلوب.</span>
+              }
+              @if (form.get('parentPhone')?.errors?.['pattern']) {
+                <span>يجب أن يكون الرقم بصيغة 01xxxxxxxxx (11 رقم).</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="grade" class="form-label">الصف الدراسي</label>
+          <select
+            id="grade"
+            class="form-select"
+            formControlName="grade"
+            [class.is-invalid]="isInvalid('grade')"
+          >
+            <option value="" disabled>اختر الصف</option>
+            @for (grade of grades; track grade) {
+              <option [value]="grade">{{ grade }}</option>
+            }
+          </select>
+          @if (isInvalid('grade')) {
+            <div class="invalid-feedback d-block">الصف الدراسي مطلوب.</div>
+          }
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="form-label">البريد الإلكتروني</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="isInvalid('email')"
+          />
+          @if (isInvalid('email')) {
+            <div class="invalid-feedback d-block">
+              @if (form.get('email')?.errors?.['required']) {
+                <span>البريد الإلكتروني مطلوب.</span>
+              }
+              @if (form.get('email')?.errors?.['email']) {
+                <span>يرجى إدخال بريد إلكتروني صحيح.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-submit">إرسال طلب التسجيل</button>
+      </form>
+    </div>
+  </div>
+</section>

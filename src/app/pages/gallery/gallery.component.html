@@ -1,0 +1,17 @@
+<section class="page-section">
+  <div class="container">
+    <h1 class="page-title">🖼️ معرض الصور</h1>
+
+    <div class="gallery-grid">
+      @for (image of images; track image.seed) {
+        <div class="gallery-item">
+          <img
+            [src]="'https://picsum.photos/seed/' + image.seed + '/300/200'"
+            [alt]="image.alt"
+            loading="lazy"
+          />
+        </div>
+      }
+    </div>
+  </div>
+</section>

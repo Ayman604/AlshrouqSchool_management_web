@@ -1,0 +1,23 @@
+<section class="hero-section text-center">
+  <div class="container">
+    <h1 class="hero-title">🌟 مرحباً بكم في مدرسة الشروق</h1>
+    <p class="hero-subtitle">نحو مستقبل مشرق بالعلم والإيمان</p>
+    <a routerLink="/register" class="btn btn-cta btn-lg">سجّل الآن</a>
+  </div>
+</section>
+
+<section class="features-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      @for (feature of features; track feature.title) {
+        <div class="col-md-4">
+          <div class="feature-card h-100 text-center">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-desc">{{ feature.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
