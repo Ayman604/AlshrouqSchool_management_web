@@ -1,8 +1,64 @@
 .site-footer {
-  background-color: var(--primary-blue);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 1.5rem 0;
   margin-top: auto;
+}
+.top-bar { background: var(--primary-green); color: rgba(255,255,255,.9); font-size: .82rem; padding: .55rem 0; }
+.top-bar-info span, .top-bar-links a { color: rgba(255,255,255,.9); text-decoration: none; white-space: nowrap; }
+.social-icons a { font-size: .95rem; }
+.top-bar-links a:hover, .social-icons a:hover { color: white; }
+
+.newsletter-bar {
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 1.25rem 0;
+}
+
+.newsletter-icon {
+  font-size: 1.5rem;
+}
+
+.newsletter-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.newsletter-form {
+  flex: 1;
+  max-width: 420px;
+}
+
+.newsletter-form .form-control {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  font-family: inherit;
+}
+
+.newsletter-form .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.4);
+}
+
+.btn-subscribe {
+  background-color: var(--accent-green);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.btn-subscribe:hover {
+  background-color: var(--accent-emerald);
+  transform: translateY(-2px);
+}
+
+.footer-main {
+  background-color: var(--primary-dark);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 2rem 0;
 }
 
 .copyright {
@@ -11,5 +67,37 @@
 
 .credit {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.footer-quote {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.8;
+}
+
+.quote-mark {
+  color: var(--accent-green);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+@media (max-width: 991.98px) {
+  .top-bar .container { justify-content: center !important; text-align: center; }
+  .newsletter-bar .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .newsletter-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .footer-quote {
+    margin-top: 1.5rem;
+  }
 }

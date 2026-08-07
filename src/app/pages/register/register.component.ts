@@ -1,56 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegisterService } from '../../services/register.service';
-import { RegisterData } from '../../models/register-data.model';
+import { Router } from '@angular/router';
 
-@Component({
-  selector: 'app-register',
-  imports: [ReactiveFormsModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
-})
+@Component({ selector: 'app-register', imports: [ReactiveFormsModule], templateUrl: './register.component.html', styleUrl: './register.component.css' })
 export class RegisterComponent {
-  private readonly fb = inject(FormBuilder);
-  private readonly registerService = inject(RegisterService);
-
-  readonly grades = [
-    'اول ابتدائي',
-    'ثاني ابتدائي',
-    'ثالث ابتدائي',
-    'رابع ابتدائي',
-    'خامس ابتدائي',
-    'سادس ابتدائي'
-  ];
-
-  readonly form = this.fb.nonNullable.group({
-    studentName: ['', [Validators.required, Validators.minLength(3)]],
-    parentPhone: ['', [Validators.required, Validators.pattern(/^01[0-9]{9}$/)]],
-    grade: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]]
-  });
-
-  submitted = false;
-
-  onSubmit(): void {
-    this.submitted = true;
-
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    const data: RegisterData = this.form.getRawValue();
-    console.log(data);
-
-    this.registerService.submitRegistration(data).subscribe(() => {
-      alert('✅ تم استلام طلب التسجيل بنجاح!');
-      this.form.reset();
-      this.submitted = false;
-    });
-  }
-
-  isInvalid(controlName: keyof RegisterData): boolean {
-    const control = this.form.get(controlName);
-    return !!(control && control.invalid && (control.touched || this.submitted));
-  }
+  private readonly fb = inject(FormBuilder); private readonly router = inject(Router);
+  readonly grades = ['الصف الأول الابتدائي','الصف الثاني الابتدائي','الصف الثالث الابتدائي','الصف الرابع الابتدائي','الصف الخامس الابتدائي','الصف السادس الابتدائي','المرحلة المتوسطة','المرحلة الثانوية'];
+  mode: 'register' | 'login' = 'register'; submitted = false;
+  readonly form = this.fb.nonNullable.group({ studentName: ['', [Validators.required, Validators.minLength(3)]], nationalId: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], parentPhone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], grade: ['', Validators.required], email: ['', [Validators.required, Validators.email]], password: ['', [Validators.required, Validators.minLength(6)]] });
+  readonly loginForm = this.fb.nonNullable.group({ identifier: ['', Validators.required], password: ['', Validators.required] });
+  submitRegister(): void { this.submitted = true; if (this.form.valid) this.router.navigateByUrl('/studentsGate/students-home'); }
+  login(): void { this.submitted = true; if (this.loginForm.valid) this.router.navigateByUrl('/studentsGate/students-home'); }
 }

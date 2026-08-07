@@ -1,0 +1,139 @@
+.portal-page {
+  max-width: 1180px;
+  margin: auto;
+  padding: 2rem 1rem 4rem;
+  background: #f6faf7;
+}
+.portal-hero {
+  background: linear-gradient(120deg, #004d31, #00894c);
+  border-radius: 18px;
+  color: #fff;
+  padding: 2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.portal-hero h1 {
+  font-weight: 800;
+  margin: 0.2rem 0;
+}
+.portal-hero i {
+  font-size: 4rem;
+  opacity: 0.7;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+.panel {
+  background: #fff;
+  padding: 1.4rem;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(0, 77, 49, 0.08);
+}
+.wide {
+  grid-column: span 2;
+}
+.panel h2 {
+  font-size: 1.15rem;
+  color: #004d31;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.lesson {
+  display: grid;
+  grid-template-columns: 100px 1fr 130px;
+  padding: 0.8rem;
+  border-bottom: 1px solid #edf1ee;
+}
+.lesson b {
+  color: #00894c;
+}
+.lesson small {
+  color: #738278;
+}
+.calendar {
+  text-align: center;
+}
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+.calendar-days span {
+  padding: 0.4rem;
+  border-radius: 6px;
+  background: #f3f6f4;
+  position: relative;
+}
+.calendar-days .has-lessons {
+  background: #dff2e6;
+  color: #006b3d;
+  font-weight: 700;
+}
+.calendar-days small {
+  display: block;
+  font-size: 0.6rem;
+}
+.outline {
+  border: 1px solid #00894c;
+  background: #fff;
+  color: #007a44;
+  border-radius: 7px;
+  padding: 0.45rem 0.7rem;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+.student-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #edf1ee;
+}
+.student-row.head {
+  font-weight: 800;
+  color: #007a44;
+}
+.salary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-bottom: 1px solid #edf1ee;
+}
+.salary strong {
+  display: block;
+  font-size: 1.1rem;
+}
+.status {
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+.paid {
+  background: #dff2e6;
+  color: #007a44;
+}
+@media (max-width: 700px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .wide {
+    grid-column: auto;
+  }
+  .portal-hero {
+    padding: 1.5rem;
+  }
+  .lesson {
+    grid-template-columns: 80px 1fr;
+  }
+  .lesson small {
+    grid-column: 2;
+  }
+  .salary {
+    flex-wrap: wrap;
+  }
+}
