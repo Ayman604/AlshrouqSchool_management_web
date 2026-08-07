@@ -1,0 +1,2 @@
+import { Component, inject } from '@angular/core'; import { Router, RouterLink } from '@angular/router'; import { AuthService } from '../../services/auth.service';
+@Component({selector:'app-admin-dashboard',imports:[RouterLink],templateUrl:'./admin-dashboard.component.html',styleUrl:'./admin-dashboard.component.css'}) export class AdminDashboardComponent {auth=inject(AuthService);router=inject(Router);logout(){this.auth.logout();this.router.navigateByUrl('/admin/login');}}
