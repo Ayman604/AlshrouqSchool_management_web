@@ -1,0 +1,70 @@
+<section class="portal-page">
+    <div class="portal-hero">
+        <div>
+            <span>بوابة المعلمين</span>
+            <h1>أهلاً أ. أحمد محمد</h1>
+            <p>كل ما تحتاجه لإدارة يومك الدراسي في مكان واحد.</p>
+        </div>
+        <i class="fa-solid fa-chalkboard-user"></i>
+    </div>
+    <div class="dashboard-grid">
+        <article id="today" class="panel wide">
+            <h2><i class="fa-regular fa-calendar-day"></i> حصص اليوم</h2>
+            <div class="lesson-list">
+                @for (lesson of todayLessons; track lesson.time) {
+                <div class="lesson"><b>{{ lesson.time }}</b>
+                    <span>{{ lesson.subject }}</span>
+                    <small>{{ lesson.grade }}</small>
+                </div> }
+            </div>
+        </article>
+        <article id="calendar" class="panel">
+            <h2>التقويم الدراسي</h2>
+            <div class="calendar">
+                <b>أغسطس 2026</b>
+                <div class="calendar-days">
+                    @for (day of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+                    track day) {
+                    <span [class.has-lessons]="day === 7 || day === 10 || day === 12">{{day}}<small>@if(day === 7 || day
+                            === 10 || day === 12){ 3 }</small></span>
+                    }
+                </div>
+            </div>
+            <button class="outline">عرض الجدول الأسبوعي الثابت</button>
+        </article>
+        <article id="students" class="panel">
+            <h2>الطلاب الذين تدرسهم</h2>
+            <div class="student-row head">
+                <span>الطالب</span>
+                <span>المادة</span>
+                <span>الصف</span>
+            </div>
+            @for(student of students;track student.name){
+            <div class="student-row">
+                <span>{{student.name}}</span>
+                <span>{{student.subject}}</span>
+                <span>{{student.grade}}</span>
+            </div>
+            }
+        </article>
+        <article id="finance" class="panel wide">
+            <h2>الماليات والرواتب</h2>
+            <div class="salary">
+                <div>
+                    <small>راتب أغسطس 2026</small>
+                    <strong>6,500 ر.س</strong>
+                </div>
+                <span class="status paid">تم الإيداع</span>
+                <button class="outline">عرض كشف الراتب</button>
+            </div>
+            <div class="salary">
+                <div>
+                    <small>راتب يوليو 2026</small>
+                    <strong>6,500 ر.س</strong>
+                </div>
+                <span class="status paid">تم القبض</span>
+                <button class="outline">عرض كشف الراتب</button>
+            </div>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,167 @@
+<!-- Hero Slider -->
+<section class="hero-slider">
+  @for (slide of slides; track $index; let i = $index) {
+    <div
+      class="hero-slide"
+      [class.active]="currentSlide() === i"
+      [style.background-image]="'url(' + slide.image + ')'"
+    >
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <h1 class="hero-title animate-fade-in-up">{{ slide.title }}</h1>
+        <p class="hero-subtitle animate-fade-in-up animate-delay-1">{{ slide.subtitle }}</p>
+        <div class="hero-actions animate-fade-in-up animate-delay-2">
+          <a routerLink="/about" class="btn btn-primary-green">استكشف المزيد</a>
+          <a routerLink="/register" class="btn btn-outline-green hero-btn-outline">▶ شاهد الفيديو</a>
+        </div>
+      </div>
+    </div>
+  }
+
+  <button class="slider-arrow slider-prev" (click)="prevSlide()" aria-label="الشريحة السابقة">‹</button>
+  <button class="slider-arrow slider-next" (click)="nextSlide()" aria-label="الشريحة التالية">›</button>
+
+  <div class="slider-dots">
+    @for (slide of slides; track $index; let i = $index) {
+      <button
+        class="dot"
+        [class.active]="currentSlide() === i"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'الشريحة ' + (i + 1)"
+      ></button>
+    }
+  </div>
+</section>
+
+<!-- Feature Strip -->
+<section class="feature-strip">
+  <div class="container">
+    <div class="row g-0">
+      @for (item of featureStrip; track item.title) {
+        <div class="col-6 col-lg-3">
+          <div class="strip-item">
+            <span class="strip-icon"><i [class]="item.icon"></i></span>
+            <span class="strip-title">{{ item.title }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Three Column Content -->
+<section class="home-content py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Quick Links -->
+      <div class="col-lg-3">
+        <div class="content-card quick-links-card animate-fade-in-up">
+          <h3 class="card-heading"><i class="fa-solid fa-link"></i> روابط سريعة</h3>
+          <ul class="quick-links-list">
+            @for (link of quickLinks; track link.label) {
+              <li>
+                <a [routerLink]="link.path">
+                  <span class="link-icon">
+                    <i [class]="link.icon"></i>
+                  </span>
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- News -->
+      <div class="col-lg-5">
+        <div class="content-card news-card animate-fade-in-up animate-delay-1">
+          <h3 class="card-heading"><i class="fa-solid fa-newspaper"></i> آخر الأخبار</h3>
+          @for (item of newsItems; track item.id) {
+            <article class="news-item">
+              <img
+                [src]="'https://picsum.photos/seed/news' + item.id + '/80/80'"
+                [alt]="item.title"
+                class="news-thumb"
+              />
+              <div class="news-body">
+                <time>{{ item.publishedAt | date: 'yyyy/MM/dd' }}</time>
+                <h4>{{ item.title }}</h4>
+              </div>
+            </article>
+          }
+          <a routerLink="/news" class="view-all">عرض جميع الأخبار ←</a>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="col-lg-4">
+        <div class="content-card about-card animate-fade-in-up animate-delay-2">
+          <h3 class="card-heading"><i class="fa-solid fa-info-circle"></i> عن المدرسة</h3>
+          <img
+            src="https://images.unsplash.com/photo-1562774053-701939374585?w=500&h=280&fit=crop"
+            alt="مبنى مدارس الشروق"
+            class="about-image"
+          />
+          <p>
+            مدارس الشروق النموذجية مؤسسة تعليمية رائدة تأسست بهدف تقديم تعليم متميز
+            يجمع بين الأصالة والمعاصرة، في بيئة آمنة ومحفّزة لاكتشاف وتنمية مواهب كل طفل.
+          </p>
+          <a routerLink="/about" class="btn btn-primary-green btn-sm">اقرأ المزيد</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Cards -->
+<section class="features-section py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-4"> لماذا مدارس الشروق؟</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3>تعليم متميز</h3>
+          <p>نقدم أحدث المناهج التعليمية بأسلوب عصري وشيق.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
+          <h3>أنشطة رياضية</h3>
+          <p>ننمي المواهب الرياضية من خلال فرق كرة القدم والسلة.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
+          <h3>فنون وإبداع</h3>
+          <p>نشجع الإبداع الفني من خلال ورش الرسم والموسيقى.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Children Gallery Strip -->
+<section class="children-gallery py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-4"><i class="fa-solid fa-user-graduate"></i> أبناؤنا .. فخرنا</h2>
+    <div class="row g-3">
+      @for (img of ['child1', 'child2', 'child3', 'child4']; track img) {
+        <div class="col-6 col-md-3">
+          <div class="child-photo">
+            <img
+              [src]="'https://picsum.photos/seed/alshoruq-' + img + '/400/300'"
+              alt="طلاب مدارس الشروق"
+              loading="lazy"
+            />
+            <div class="photo-overlay">
+              <span>مدارس الشروق</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

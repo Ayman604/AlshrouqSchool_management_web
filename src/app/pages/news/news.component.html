@@ -1,0 +1,17 @@
+<section class="page-section">
+  <div class="container">
+    <h1 class="page-title"><i class="fa-solid fa-bullhorn"></i> الأخبار والإعلانات</h1>
+
+    <div class="news-list">
+      @for (item of newsItems; track item.id) {
+        <article class="news-card">
+          <h2 class="news-title">{{ item.title }}</h2>
+          <p class="news-desc">{{ item.description }}</p>
+          <time class="news-date">{{ item.publishedAt | date: 'yyyy/MM/dd' }}</time>
+        </article>
+      } @empty {
+        <p class="text-muted">لا توجد أخبار حالياً.</p>
+      }
+    </div>
+  </div>
+</section>

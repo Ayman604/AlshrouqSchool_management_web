@@ -1,0 +1,49 @@
+<section class="student-page">
+    <div class="student-hero">
+        <div><span>بوابة الطلاب</span>
+            <h1>مرحباً محمد أحمد</h1>
+            <p>الصف الخامس الابتدائي · عام دراسي 2026</p>
+        </div><i class="fa-solid fa-graduation-cap"></i>
+    </div>
+    <div class="student-grid">
+        <article id="today" class="card wide">
+            <h2>حصص اليوم</h2>@for(lesson of lessons;track lesson.time){<div class="class-row">
+                <b>{{lesson.time}}</b><span>{{lesson.subject}}</span><span>القاعة 3</span></div>}
+        </article>
+        <article id="calendar" class="card">
+            <h2>التقويم</h2>
+            <p>لديك <strong>3 حصص</strong> اليوم و15 حصة هذا الأسبوع.</p>
+            <div class="week"><span>الأحد<br><b>3</b></span><span>الاثنين<br><b>4</b></span><span
+                    class="active">الثلاثاء<br><b>3</b></span><span>الأربعاء<br><b>3</b></span><span>الخميس<br><b>2</b></span>
+            </div><button class="outline">عرض الجدول الأسبوعي الثابت</button>
+        </article>
+        <article id="activities" class="card">
+            <h2>الأنشطة</h2>
+            <div class="activity"><i class="fa-solid fa-futbol"></i><span><b>النادي الرياضي</b><small>الاثنين · 04:00
+                        م</small></span></div>
+            <div class="activity"><i class="fa-solid fa-palette"></i><span><b>نادي الفنون</b><small>الأربعاء · 03:30
+                        م</small></span></div>
+        </article>
+        <article id="fees" class="card wide">
+            <h2>الرسوم الدراسية</h2>
+            <p>المبلغ المستحق لهذا الفصل: <strong>2,400 ر.س</strong></p>
+            <div class="payer"><span>من سيقوم بالدفع؟</span><label><input type="radio" name="payer"
+                        [checked]="payer === 'student'" (change)="payer = 'student'"> الطالب</label><label><input
+                        type="radio" name="payer" [checked]="payer === 'parent'" (change)="payer = 'parent'"> ولي
+                    الأمر</label></div><input class="identity" maxlength="10" inputmode="numeric"
+                placeholder="أدخل رقم الهوية الوطنية (10 أرقام)"><button class="pay">متابعة الدفع الإلكتروني</button>
+        </article>
+        <article id="exams" class="card">
+            <h2>الاختبارات</h2>
+            <p><b>اختبار الرياضيات الدوري</b><br><small>الأحد 16 أغسطس · 09:00 ص</small></p>
+            <p><b>اختبار العلوم الدوري</b><br><small>الثلاثاء 18 أغسطس · 10:00 ص</small></p>
+        </article>
+        <article id="results" class="card">
+            <h2>نتائج الامتحانات</h2>
+            <div class="result"><span>الرياضيات</span><b>94%</b></div>
+            <div class="result"><span>العلوم</span><b>91%</b></div>
+            <div class="result"><span>اللغة العربية</span><b>96%</b></div><button class="outline">عرض جميع
+                النتائج</button>
+        </article>
+    </div>
+</section>
