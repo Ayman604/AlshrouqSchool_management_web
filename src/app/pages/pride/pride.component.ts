@@ -1,10 +1,9 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subject, catchError, finalize, of, switchMap, tap } from 'rxjs';
-import { NewsService } from '../../services/news.service';
-import { NewsListItem } from '../../models/news.model';
+import { AchievementService } from '../../services/achievement.service';
+import { StudentAchievementListItem } from '../../models/achievement.model';
 import { PaginatedResponse } from '../../models/paginated-response.model';
 import { PaginationComponent } from '../../core/components/pagination/pagination.component';
 import { ContentSkeletonComponent } from '../../core/components/content-skeleton/content-skeleton.component';
@@ -12,25 +11,25 @@ import { environment } from '../../../environments/environment';
 import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url.util';
 
 @Component({
-  selector: 'app-news',
-  imports: [DatePipe, RouterLink, PaginationComponent, ContentSkeletonComponent],
-  templateUrl: './news.component.html',
-  styleUrl: './news.component.css'
+  selector: 'app-pride',
+  imports: [RouterLink, PaginationComponent, ContentSkeletonComponent],
+  templateUrl: './pride.component.html',
+  styleUrl: './pride.component.css'
 })
-export class NewsComponent {
-  private readonly newsService = inject(NewsService);
+export class PrideComponent {
+  private readonly achievementService = inject(AchievementService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly refreshPage = new Subject<void>();
 
-  readonly items = signal<NewsListItem[]>([]);
+  readonly items = signal<StudentAchievementListItem[]>([]);
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly pageNumber = signal(1);
-  readonly pageSize = signal(9);
+  readonly pageSize = signal(8);
   readonly totalPages = signal(0);
   readonly totalCount = signal(0);
   readonly categoryFilter = signal('');
-  readonly contentTypeFilter = signal<'News' | 'Event' | ''>('');
+  readonly yearFilter = signal('');
 
   readonly apiBaseUrl = environment.apiUrl;
 
@@ -42,16 +41,16 @@ export class NewsComponent {
           this.error.set(null);
         }),
         switchMap(() =>
-          this.newsService
+          this.achievementService
             .getPage({
               pageNumber: this.pageNumber(),
               pageSize: this.pageSize(),
               category: this.categoryFilter() || undefined,
-              contentType: this.contentTypeFilter() || undefined
+              academicYear: this.yearFilter() || undefined
             })
             .pipe(
               catchError(() => {
-                this.error.set('تعذّر تحميل الأخبار. يرجى المحاولة لاحقاً.');
+                this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
                   pageNumber: this.pageNumber(),
@@ -60,7 +59,7 @@ export class NewsComponent {
                   totalPages: 0,
                   hasPreviousPage: false,
                   hasNextPage: false
-                } satisfies PaginatedResponse<NewsListItem>);
+                } satisfies PaginatedResponse<StudentAchievementListItem>);
               }),
               finalize(() => this.loading.set(false))
             )
@@ -91,10 +90,8 @@ export class NewsComponent {
     this.loadPage();
   }
 
-  onContentTypeChange(event: Event): void {
-    this.contentTypeFilter.set(
-      (event.target as HTMLSelectElement).value as 'News' | 'Event' | ''
-    );
+  onYearChange(event: Event): void {
+    this.yearFilter.set((event.target as HTMLSelectElement).value);
     this.pageNumber.set(1);
     this.loadPage();
   }
@@ -108,10 +105,6 @@ export class NewsComponent {
     this.pageSize.set(size);
     this.pageNumber.set(1);
     this.loadPage();
-  }
-
-  contentTypeLabel(type: NewsListItem['contentType']): string {
-    return type === 'Event' ? 'فعالية' : 'خبر';
   }
 
   private loadPage(): void {

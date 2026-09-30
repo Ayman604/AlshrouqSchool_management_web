@@ -36,6 +36,7 @@ export class HeaderComponent {
     { path: '/about', label: 'عن المدرسة' },
     { path: '/news', label: 'الأخبار والفعاليات' },
     { path: '/gallery', label: 'المعرض' },
+    { path: '/pride', label: 'أبناؤنا فخرنا' },
     { path: '/contact', label: 'تواصل معنا' },
     // { path: '/teachersGate/teacher-dashboard', label: 'بوابة المعلمين' },
     // { path: '/studentsGate/student-dashboard', label: 'بوابة الطلاب' }

@@ -1,0 +1,12 @@
+<div class="skeleton-wrap" [class.skeleton-list]="variant() === 'list'">
+  @for (i of indices(); track i) {
+    <div class="skeleton-item" [class.skeleton-row]="variant() === 'list'">
+      <div class="skeleton-media shimmer"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line shimmer w-75"></div>
+        <div class="skeleton-line shimmer w-100"></div>
+        <div class="skeleton-line shimmer w-50"></div>
+      </div>
+    </div>
+  }
+</div>

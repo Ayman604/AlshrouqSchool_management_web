@@ -1,0 +1,54 @@
+@if (totalPages() > 0) {
+  <nav class="pagination-bar" aria-label="التصفح بين الصفحات">
+    <div class="pagination-meta">
+      <span>الصفحة {{ pageNumber() }} من {{ totalPages() }}</span>
+      @if (totalCount() > 0) {
+        <span class="text-muted">({{ totalCount() }} عنصر)</span>
+      }
+    </div>
+
+    <div class="pagination-controls">
+      <button
+        type="button"
+        class="page-btn"
+        [disabled]="loading() || pageNumber() <= 1"
+        (click)="goToPage(pageNumber() - 1)"
+      >
+        السابق
+      </button>
+
+      @for (page of pageNumbers(); track page) {
+        <button
+          type="button"
+          class="page-btn"
+          [class.active]="page === pageNumber()"
+          [disabled]="loading()"
+          (click)="goToPage(page)"
+          [attr.aria-current]="page === pageNumber() ? 'page' : null"
+        >
+          {{ page }}
+        </button>
+      }
+
+      <button
+        type="button"
+        class="page-btn"
+        [disabled]="loading() || pageNumber() >= totalPages()"
+        (click)="goToPage(pageNumber() + 1)"
+      >
+        التالي
+      </button>
+    </div>
+
+    @if (pageSizeOptions().length > 1) {
+      <label class="page-size">
+        <span>عدد العناصر</span>
+        <select [value]="pageSize()" (change)="onPageSizeChange($event)" [disabled]="loading()">
+          @for (size of pageSizeOptions(); track size) {
+            <option [value]="size">{{ size }}</option>
+          }
+        </select>
+      </label>
+    }
+  </nav>
+}

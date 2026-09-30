@@ -1,0 +1,116 @@
+.page-section {
+  padding: 3rem 0;
+}
+
+.page-intro {
+  color: var(--text-muted);
+  margin: -1rem 0 1.5rem;
+}
+
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.filters-bar label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filters-bar select {
+  min-width: 180px;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 77, 49, 0.2);
+  background: var(--white);
+}
+
+.pride-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.pride-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.pride-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.pride-link {
+  color: inherit;
+  display: block;
+}
+
+.pride-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.pride-body {
+  padding: 1rem 1.15rem 1.2rem;
+}
+
+.pride-year,
+.pride-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(0, 166, 81, 0.12);
+  color: var(--accent-emerald);
+}
+
+.pride-body h2 {
+  font-size: 1.05rem;
+  color: var(--primary-green);
+  margin: 0.55rem 0 0.35rem;
+}
+
+.student-name {
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.summary {
+  margin: 0;
+  color: #555;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.state-message {
+  text-align: center;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.state-error {
+  color: #842029;
+  background: #f8d7da;
+}
+
+.state-empty {
+  color: var(--text-muted);
+}

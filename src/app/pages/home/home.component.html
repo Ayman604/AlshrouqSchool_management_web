@@ -76,18 +76,28 @@
       <div class="col-lg-5">
         <div class="content-card news-card animate-fade-in-up animate-delay-1">
           <h3 class="card-heading"><i class="fa-solid fa-newspaper"></i> آخر الأخبار</h3>
-          @for (item of newsItems; track item.id) {
-            <article class="news-item">
-              <img
-                [src]="'https://picsum.photos/seed/news' + item.id + '/80/80'"
-                [alt]="item.title"
-                class="news-thumb"
-              />
-              <div class="news-body">
-                <time>{{ item.publishedAt | date: 'yyyy/MM/dd' }}</time>
-                <h4>{{ item.title }}</h4>
-              </div>
-            </article>
+          @if (newsLoading()) {
+            <p class="mini-loading">جاري تحميل الأخبار...</p>
+          } @else {
+            @for (item of newsItems(); track item.id) {
+              <article class="news-item">
+                <a [routerLink]="['/news', item.id]" class="news-item-link">
+                  <img
+                    [src]="mediaUrl(item.coverImageUrl)"
+                    [alt]="item.title"
+                    class="news-thumb"
+                    loading="lazy"
+                    (error)="onImageError($event)"
+                  />
+                  <div class="news-body">
+                    <time>{{ item.publishedAt | date: 'yyyy/MM/dd' }}</time>
+                    <h4>{{ item.title }}</h4>
+                  </div>
+                </a>
+              </article>
+            } @empty {
+              <p class="mini-empty">لا توجد أخبار حالياً.</p>
+            }
           }
           <a routerLink="/news" class="view-all">عرض جميع الأخبار ←</a>
         </div>
@@ -147,21 +157,33 @@
 <section class="children-gallery py-5">
   <div class="container">
     <h2 class="section-title text-center mb-4"><i class="fa-solid fa-user-graduate"></i> أبناؤنا .. فخرنا</h2>
-    <div class="row g-3">
-      @for (img of ['child1', 'child2', 'child3', 'child4']; track img) {
-        <div class="col-6 col-md-3">
-          <div class="child-photo">
-            <img
-              [src]="'https://picsum.photos/seed/alshoruq-' + img + '/400/300'"
-              alt="طلاب مدارس الشروق"
-              loading="lazy"
-            />
-            <div class="photo-overlay">
-              <span>مدارس الشروق</span>
-            </div>
+    @if (prideLoading()) {
+      <p class="text-center mini-loading">جاري تحميل الإنجازات...</p>
+    } @else {
+      <div class="row g-3">
+        @for (item of prideItems(); track item.id) {
+          <div class="col-6 col-md-3">
+            <a [routerLink]="['/pride', item.id]" class="child-photo">
+              <img
+                [src]="mediaUrl(item.imageUrl)"
+                [alt]="item.title"
+                loading="lazy"
+                (error)="onImageError($event)"
+              />
+              <div class="photo-overlay">
+                <span>{{ item.title }}</span>
+              </div>
+            </a>
           </div>
-        </div>
-      }
-    </div>
+        } @empty {
+          <div class="col-12">
+            <p class="text-center mini-empty">لا توجد إنجازات معروضة حالياً.</p>
+          </div>
+        }
+      </div>
+      <div class="text-center mt-4">
+        <a routerLink="/pride" class="btn btn-outline-green">عرض جميع الإنجازات</a>
+      </div>
+    }
   </div>
 </section>

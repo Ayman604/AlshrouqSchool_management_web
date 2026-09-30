@@ -5,6 +5,9 @@ import { NewsComponent } from './pages/news/news.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { PrideComponent } from './pages/pride/pride.component';
+import { PrideDetailComponent } from './pages/pride/pride-detail.component';
+import { NewsDetailComponent } from './pages/news/news-detail.component';
 import { TeacherDashboardComponent } from './pages/teacher-dashboard/teacher-dashboard.component';
 import { StudentDashboardComponent } from './pages/student-dashboard/student-dashboard.component';
 import { TeacherLoginComponent } from './pages/teacher-login/teacher-login.component';
@@ -18,6 +21,9 @@ export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'الرئيسية' },
   { path: 'about', component: AboutComponent, title: 'عن المدرسة' },
   { path: 'news', component: NewsComponent, title: 'الأخبار' },
+  { path: 'news/:id', component: NewsDetailComponent, title: 'تفاصيل الخبر' },
+  { path: 'pride', component: PrideComponent, title: 'أبناؤنا فخرنا' },
+  { path: 'pride/:id', component: PrideDetailComponent, title: 'تفاصيل الإنجاز' },
   { path: 'register', component: RegisterComponent, title: 'بوابة الطلاب' },
   { path: 'teacher-login', component: TeacherLoginComponent, title: 'دخول المعلمين' },
   { path: 'contact', component: ContactComponent, title: 'تواصل معنا' },

@@ -1,0 +1,29 @@
+<section class="page-section">
+  <div class="container detail-container">
+    <a routerLink="/news" class="back-link"><i class="fa-solid fa-arrow-right"></i> العودة للأخبار</a>
+
+    @if (loading()) {
+      <app-content-skeleton [count]="1" variant="list" />
+    } @else if (error()) {
+      <div class="state-error" role="alert">{{ error() }}</div>
+    } @else if (item(); as news) {
+      <article class="detail-card">
+        <div class="detail-cover">
+          <img
+            [src]="mediaUrl(news.coverImageUrl)"
+            [alt]="news.title"
+            (error)="onImageError($event)"
+          />
+        </div>
+        <div class="detail-body">
+          @if (news.category) {
+            <span class="detail-category">{{ news.category }}</span>
+          }
+          <h1>{{ news.title }}</h1>
+          <time>{{ news.publishedAt | date: 'fullDate' : '' : 'ar' }}</time>
+          <div class="detail-content">{{ news.body }}</div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

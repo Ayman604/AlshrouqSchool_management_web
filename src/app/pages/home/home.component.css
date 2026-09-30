@@ -230,6 +230,24 @@
   font-size: 1.1rem;
 }
 
+.mini-loading,
+.mini-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.news-item-link {
+  display: flex;
+  gap: 0.75rem;
+  color: inherit;
+}
+
+.child-photo {
+  display: block;
+  color: inherit;
+}
+
 /* News Items */
 .news-item {
   display: flex;

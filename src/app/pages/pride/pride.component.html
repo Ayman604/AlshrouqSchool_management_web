@@ -1,0 +1,75 @@
+<section class="page-section">
+  <div class="container">
+    <h1 class="page-title"><i class="fa-solid fa-user-graduate"></i> أبناؤنا .. فخرنا</h1>
+    <p class="page-intro">نفخر بإنجازات طلابنا وتميزهم الأكاديمي وفي مختلف الأنشطة.</p>
+
+    <div class="filters-bar">
+      <label>
+        <span>التصنيف</span>
+        <select (change)="onCategoryChange($event)" [disabled]="loading()">
+          <option value="">الكل</option>
+          <option value="academic">أكاديمي</option>
+          <option value="sports">رياضي</option>
+          <option value="arts">فنون</option>
+          <option value="competitions">مسابقات</option>
+        </select>
+      </label>
+      <label>
+        <span>العام الدراسي</span>
+        <select (change)="onYearChange($event)" [disabled]="loading()">
+          <option value="">جميع الأعوام</option>
+          <option value="2025-2026">2025/2026</option>
+          <option value="2024-2025">2024/2025</option>
+          <option value="2023-2024">2023/2024</option>
+        </select>
+      </label>
+    </div>
+
+    @if (loading()) {
+      <app-content-skeleton [count]="pageSize()" variant="card" />
+    } @else if (error()) {
+      <div class="state-message state-error" role="alert">{{ error() }}</div>
+    } @else if (items().length === 0) {
+      <div class="state-message state-empty">
+        <p>لا توجد إنجازات معروضة حالياً.</p>
+      </div>
+    } @else {
+      <div class="pride-grid">
+        @for (item of items(); track item.id) {
+          <article class="pride-card">
+            <a [routerLink]="['/pride', item.id]" class="pride-link">
+              <div class="pride-image">
+                <img
+                  [src]="mediaUrl(item.imageUrl)"
+                  [alt]="item.title"
+                  loading="lazy"
+                  (error)="onImageError($event)"
+                />
+              </div>
+              <div class="pride-body">
+                <span class="pride-year">{{ item.academicYear }}</span>
+                @if (item.category) {
+                  <span class="pride-category">{{ item.category }}</span>
+                }
+                <h2>{{ item.title }}</h2>
+                <p class="student-name">{{ item.studentName }}</p>
+                <p class="summary">{{ item.summary }}</p>
+              </div>
+            </a>
+          </article>
+        }
+      </div>
+
+      <app-pagination
+        [pageNumber]="pageNumber()"
+        [totalPages]="totalPages()"
+        [totalCount]="totalCount()"
+        [pageSize]="pageSize()"
+        [loading]="loading()"
+        [pageSizeOptions]="[4, 8, 12]"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)"
+      />
+    }
+  </div>
+</section>

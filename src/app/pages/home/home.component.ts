@@ -1,8 +1,14 @@
-import { Component, OnDestroy, OnInit, inject , signal } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { DatePipe , CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { catchError, of } from 'rxjs';
 import { NewsService } from '../../services/news.service';
-import { News } from '../../models/news.model';
+import { AchievementService } from '../../services/achievement.service';
+import { NewsListItem } from '../../models/news.model';
+import { StudentAchievementListItem } from '../../models/achievement.model';
+import { environment } from '../../../environments/environment';
+import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url.util';
 
 interface HeroSlide {
   image: string;
@@ -30,6 +36,8 @@ interface QuickLink {
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly newsService = inject(NewsService);
+  private readonly achievementService = inject(AchievementService);
+  private readonly destroyRef = inject(DestroyRef);
   private slideInterval?: ReturnType<typeof setInterval>;
 
   currentSlide = signal(0);
@@ -45,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       title: 'تعليم متميز لكل طفل',
       subtitle: 'نكتشف المواهب وننمّيها في بيئة آمنة ومحفّزة'
     },
-     {
+    {
       image: '/images/hero/hero2.webp',
       title: 'نربي جيلاً يصنع المستقبل',
       subtitle: 'بيئة تعليمية محفّزة تجمع بين التميز الأكاديمي والقيم الأصيلة'
@@ -67,29 +75,56 @@ export class HomeComponent implements OnInit, OnDestroy {
     { icon: 'fa-solid fa-graduation-cap', label: 'منصة التعلم', path: '/gallery' }
   ];
 
-  newsItems: News[] = [];
+  newsItems = signal<NewsListItem[]>([]);
+  newsLoading = signal(true);
+  prideItems = signal<StudentAchievementListItem[]>([]);
+  prideLoading = signal(true);
+
+  readonly apiBaseUrl = environment.apiUrl;
 
   ngOnInit(): void {
-    this.newsService.getNews().subscribe((news) => {
-      this.newsItems = news.slice(0, 3);
-    });
+    this.newsService
+      .getPage({ pageNumber: 1, pageSize: 3 })
+      .pipe(
+        catchError(() => of({ items: [] })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.newsItems.set(response.items);
+        this.newsLoading.set(false);
+      });
 
-    this.slideInterval = setInterval(() => this.nextSlide(), 10000);
-  this.startAutoPlay();
+    this.achievementService
+      .getPage({ pageNumber: 1, pageSize: 4 })
+      .pipe(
+        catchError(() => of({ items: [] })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.prideItems.set(response.items);
+        this.prideLoading.set(false);
+      });
+
+    this.startAutoPlay();
   }
 
   ngOnDestroy(): void {
-    if (this.slideInterval) {
-      clearInterval(this.slideInterval);
-    }
     this.stopAutoPlay();
+  }
+
+  mediaUrl(path: string | null | undefined): string {
+    return resolveMediaUrl(path, this.apiBaseUrl);
+  }
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = placeholderImageUrl();
   }
 
   private startAutoPlay(): void {
     this.stopAutoPlay();
     this.slideInterval = setInterval(() => {
       this.nextSlide();
-    }, 10000); // 10 seconds
+    }, 10000);
   }
 
   private stopAutoPlay(): void {
@@ -106,7 +141,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   nextSlide(): void {
     this.currentSlide.update(v => (v + 1) % this.slides.length);
-
   }
 
   prevSlide(): void {
