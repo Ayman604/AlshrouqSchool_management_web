@@ -1,17 +1,20 @@
 @import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 
 :root {
-  --primary-green: #004d31;
-  --primary-dark: #003322;
-  --accent-green: #00a651;
-  --accent-emerald: #218c5e;
-  --text-dark: #2c3e50;
+  --navy: #0A286B;
+  --gold: #F4B900;
+  --pale-blue: #EAF0F8;
+  --primary-green: var(--navy);
+  --primary-dark: #071d51;
+  --accent-green: var(--gold);
+  --accent-emerald: #123d91;
+  --text-dark: #172c56;
   --text-muted: #6c757d;
-  --bg-light: #f8f9fa;
+  --bg-light: #F3F5F8;
   --white: #ffffff;
-  --shadow-sm: 0 2px 12px rgba(0, 77, 49, 0.08);
-  --shadow-md: 0 8px 30px rgba(0, 77, 49, 0.12);
-  --radius: 8px;
+  --shadow-sm: 0 2px 12px rgba(10, 40, 107, 0.08);
+  --shadow-md: 0 8px 30px rgba(10, 40, 107, 0.12);
+  --radius: 10px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* legacy aliases */
