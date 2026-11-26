@@ -2,17 +2,7 @@
   <div class="container">
     <h1 class="page-title"><i class="fa-solid fa-photo-film"></i> معرض الصور والفيديو</h1>
 
-    <div class="filters-bar">
-      <label>
-        <span>الألبوم</span>
-        <select (change)="onAlbumChange($event)" [disabled]="loading() || albumsLoading()">
-          <option value="">جميع الألبومات</option>
-          @for (album of albums(); track album.id) {
-            <option [value]="album.id">{{ album.name }}</option>
-          }
-        </select>
-      </label>
-    </div>
+    
 
     @if (loading()) {
       <app-content-skeleton [count]="pageSize()" variant="card" />
@@ -30,22 +20,22 @@
       <div class="gallery-grid">
         @for (item of items(); track item.id) {
           <button type="button" class="gallery-item" (click)="openPreview(item)">
-            @if (item.mediaType === 'Video') {
+            @if (item.type === 2) {
               <span class="media-type-badge"><i class="fa-solid fa-play"></i> فيديو</span>
             }
             <img
-              [src]="thumbnailUrl(item)"
-              [alt]="item.title"
+              [src]="item.filePath"
+              [alt]="item.altText"
               loading="lazy"
               (error)="onImageError($event)"
             />
-            <span class="gallery-caption">{{ item.title }}</span>
+            <span class="gallery-caption">{{ item.fileName }}</span>
           </button>
         }
       </div>
 
       <app-pagination
-        [pageNumber]="pageNumber()"
+        [pageNumber]="pageIndex()"
         [totalPages]="totalPages()"
         [totalCount]="totalCount()"
         [pageSize]="pageSize()"
@@ -64,13 +54,13 @@
       <button type="button" class="lightbox-close" (click)="closePreview()" aria-label="إغلاق">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <h2>{{ active.title }}</h2>
-      @if (active.mediaType === 'Video') {
-        <video controls [src]="mediaUrl(active.url)" class="lightbox-media"></video>
+      <h2>{{ active.fileName }}</h2>
+      @if (active.type === 2) {
+        <video controls [src]="active.filePath" class="lightbox-media"></video>
       } @else {
         <img
-          [src]="mediaUrl(active.url)"
-          [alt]="active.title"
+          [src]="active.filePath"
+          [alt]="active.altText"
           class="lightbox-media"
           (error)="onImageError($event)"
         />

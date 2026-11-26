@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.newsService
-      .getPage({ pageNumber: 1, pageSize: 3 })
+      .getPage({ pageIndex: 1, pageSize: 4 })
       .pipe(
         catchError(() => of({ items: [] })),
         takeUntilDestroyed(this.destroyRef)
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     this.achievementService
-      .getPage({ pageNumber: 1, pageSize: 4 })
+      .getPage({ pageIndex: 1, pageSize: 4 })
       .pipe(
         catchError(() => of({ items: [] })),
         takeUntilDestroyed(this.destroyRef)

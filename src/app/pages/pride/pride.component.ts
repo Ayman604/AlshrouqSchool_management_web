@@ -43,7 +43,7 @@ export class PrideComponent {
         switchMap(() =>
           this.achievementService
             .getPage({
-              pageNumber: this.pageNumber(),
+              pageIndex: this.pageNumber(),
               pageSize: this.pageSize(),
               category: this.categoryFilter() || undefined,
               academicYear: this.yearFilter() || undefined
@@ -53,12 +53,11 @@ export class PrideComponent {
                 this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
-                  pageNumber: this.pageNumber(),
+                  pageIndex: this.pageNumber(),
                   pageSize: this.pageSize(),
                   totalCount: 0,
                   totalPages: 0,
-                  hasPreviousPage: false,
-                  hasNextPage: false
+                  
                 } satisfies PaginatedResponse<StudentAchievementListItem>);
               }),
               finalize(() => this.loading.set(false))
@@ -68,7 +67,7 @@ export class PrideComponent {
       )
       .subscribe(response => {
         this.items.set(response.items);
-        this.pageNumber.set(response.pageNumber);
+        this.pageNumber.set(response.pageIndex);
         this.totalPages.set(response.totalPages);
         this.totalCount.set(response.totalCount);
       });

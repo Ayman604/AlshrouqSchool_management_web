@@ -44,7 +44,7 @@ export class NewsComponent {
         switchMap(() =>
           this.newsService
             .getPage({
-              pageNumber: this.pageNumber(),
+              pageIndex: this.pageNumber(),
               pageSize: this.pageSize(),
               category: this.categoryFilter() || undefined,
               contentType: this.contentTypeFilter() || undefined
@@ -54,12 +54,11 @@ export class NewsComponent {
                 this.error.set('تعذّر تحميل الأخبار. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
-                  pageNumber: this.pageNumber(),
+                  pageIndex: this.pageNumber(),
                   pageSize: this.pageSize(),
                   totalCount: 0,
                   totalPages: 0,
-                  hasPreviousPage: false,
-                  hasNextPage: false
+                  
                 } satisfies PaginatedResponse<NewsListItem>);
               }),
               finalize(() => this.loading.set(false))
@@ -69,7 +68,7 @@ export class NewsComponent {
       )
       .subscribe(response => {
         this.items.set(response.items);
-        this.pageNumber.set(response.pageNumber);
+        this.pageNumber.set(response.pageIndex);
         this.totalPages.set(response.totalPages);
         this.totalCount.set(response.totalCount);
       });

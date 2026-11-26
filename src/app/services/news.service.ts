@@ -28,7 +28,7 @@ export class NewsService {
   getPage(query: NewsQuery): Observable<PaginatedResponse<NewsListItem>> {
     return this.http.get<PaginatedResponse<NewsListItem>>(this.baseUrl, {
       params: toHttpParams({
-        pageNumber: query.pageNumber,
+        pageIndex: query.pageIndex,
         pageSize: query.pageSize,
         category: query.category,
         contentType: query.contentType

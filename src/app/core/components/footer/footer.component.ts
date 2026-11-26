@@ -65,7 +65,7 @@ export class FooterComponent {
     { label: 'عن المدرسة', url: '/about' },
     { label: 'الأخبار والفعاليات', url: '/news' },
     { label: 'المنصة التعليمية', url: '/platform' },
-    { label: 'معرض المبور', url: '/gallery' },
+    { label: 'معرض الصور', url: '/gallery' },
     { label: 'اتصل بنا', url: '/contact' },
   ];
 }
