@@ -50,7 +50,7 @@ export class PrideComponent {
             })
             .pipe(
               catchError(() => {
-                this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
+                // this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
                   pageIndex: this.pageNumber(),

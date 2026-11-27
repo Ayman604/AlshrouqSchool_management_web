@@ -7,11 +7,11 @@
     } @else if (error()) {
       <div class="state-error" role="alert">{{ error() }}</div>
     } @else if (item(); as news) {
-      <article class="detail-card">
+      <!-- <article class="detail-card">
         <div class="detail-cover">
           <img
-            [src]="mediaUrl(news.coverImageUrl)"
-            [alt]="news.title"
+            [src]="mediaUrl(news.mediaAttachments?.[0]?.filePath)"
+[alt]="news.mediaAttachments?.[0]?.altText || news.title"
             (error)="onImageError($event)"
           />
         </div>
@@ -21,9 +21,18 @@
           }
           <h1>{{ news.title }}</h1>
           <time>{{ news.publishedAt | date: 'fullDate' : '' : 'ar' }}</time>
-          <div class="detail-content">{{ news.body }}</div>
+          <div class="detail-content">{{ news.content }}</div>
         </div>
-      </article>
+      </article> -->
+      <div class="detail-media">
+  @for (media of news.mediaAttachments; track media.mediaId) {
+    <img
+      [src]="mediaUrl(media.filePath)"
+      [alt]="media.altText || news.title"
+      (error)="onImageError($event)"
+    />
+  }
+</div>
     }
   </div>
 </section>

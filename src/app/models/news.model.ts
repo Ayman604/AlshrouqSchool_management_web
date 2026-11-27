@@ -18,3 +18,22 @@ export interface NewsDetail extends NewsListItem {
 
 /** @deprecated Use NewsListItem — kept for gradual migration. */
 export type News = NewsListItem;
+
+export interface NewsMediaAttachment {
+  mediaId: number;
+  fileName: string;
+  filePath: string;
+  altText?: string | null;
+  type: number;
+}
+
+export interface NewsDetail {
+  id: number;
+  title: string;
+  content: string;
+  type: number;
+  isPublished: boolean;
+  updatedAtUtc: string;
+  mediaAttachments: NewsMediaAttachment[];
+}
+

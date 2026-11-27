@@ -51,7 +51,7 @@ export class NewsComponent {
             })
             .pipe(
               catchError(() => {
-                this.error.set('تعذّر تحميل الأخبار. يرجى المحاولة لاحقاً.');
+                //this.error.set('تعذّر تحميل الأخبار. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
                   pageIndex: this.pageNumber(),

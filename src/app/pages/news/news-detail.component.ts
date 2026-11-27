@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize, switchMap } from 'rxjs';
 import { NewsService } from '../../services/news.service';
@@ -11,7 +10,7 @@ import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url
 
 @Component({
   selector: 'app-news-detail',
-  imports: [DatePipe, RouterLink, ContentSkeletonComponent],
+  imports: [RouterLink, ContentSkeletonComponent],
   templateUrl: './news-detail.component.html',
   styleUrl: './news-detail.component.css'
 })
@@ -45,9 +44,20 @@ export class NewsDetailComponent {
       });
   }
 
+  // mediaUrl(path: string | null | undefined): string {
+  //   return resolveMediaUrl(path, this.apiBaseUrl);
+  // }
   mediaUrl(path: string | null | undefined): string {
-    return resolveMediaUrl(path, this.apiBaseUrl);
+  if (!path?.trim()) {
+    return placeholderImageUrl();
   }
+
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  return `https://localhost:7102/${path}`;
+}
 
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = placeholderImageUrl();

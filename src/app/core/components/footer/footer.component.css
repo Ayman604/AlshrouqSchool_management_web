@@ -242,6 +242,11 @@
 .footer__logo {
   width: 72px;
   height: 72px;
+  padding: 4px;
+  background: rgb(255, 255, 255);
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .footer__logo img {
@@ -310,17 +315,15 @@
 
 .footer__official-logo {
   display: block;
-  width: 120px;
+  width: 130px;
   height: 92px;
   object-fit: contain;
   padding: .45rem;
   background: var(--white);
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
-.footer__official-logo--vision {
-  width: 150px;
-}
 
 .footer__official-logos {
   display: flex;
@@ -330,18 +333,11 @@
   min-height: 112px;
 }
 
-.footer__official-logo {
-  display: block;
-  width: 120px;
-  height: 92px;
-  object-fit: contain;
-  padding: .45rem;
-  background: var(--white);
-  border-radius: 8px;
-}
+
 
 .footer__official-logo--vision {
-  width: 150px;
+  width: 130px;
+  height: 92px;
 }
 
 .footer__col-title {

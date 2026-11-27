@@ -3,7 +3,7 @@
     <h1 class="page-title"><i class="fa-solid fa-user-graduate"></i>الإنجازات</h1>
     <p class="page-intro">نفخر بإنجازات طلابنا وتميزهم الأكاديمي وفي مختلف الأنشطة.</p>
 
-    <div class="filters-bar">
+    <!-- <div class="filters-bar">
       <label>
         <span>التصنيف</span>
         <select (change)="onCategoryChange($event)" [disabled]="loading()">
@@ -23,15 +23,19 @@
           <option value="2023-2024">2023/2024</option>
         </select>
       </label>
-    </div>
+    </div> -->
 
     @if (loading()) {
       <app-content-skeleton [count]="pageSize()" variant="card" />
     } @else if (error()) {
-      <div class="state-message state-error" role="alert">{{ error() }}</div>
+      <div class="state-message state-error" role="alert">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ error() }}
+      </div>
     } @else if (items().length === 0) {
       <div class="state-message state-empty">
-        <p>لا توجد إنجازات معروضة حالياً.</p>
+        <i class="fa-solid fa-trophy"></i>
+        <p>لا توجد إنجازات متاحة حالياً.</p>
       </div>
     } @else {
       <div class="pride-grid">

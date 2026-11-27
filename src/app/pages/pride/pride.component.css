@@ -94,16 +94,17 @@
   line-height: 1.65;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 .state-message {
   text-align: center;
-  padding: 2rem;
-  background: var(--white);
+  padding: 2.5rem 1rem; 
   border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  background: var(--white); 
+  box-shadow: var(--shadow-sm); 
 }
 
 .state-error {
@@ -113,4 +114,22 @@
 
 .state-empty {
   color: var(--text-muted);
+}
+
+.state-message i {
+  font-size: 2rem;
+  color: var(--accent-green); 
+  margin-bottom: 0.75rem;
+}
+
+.state-empty p {
+  margin: 0;
+  color: var(--text-muted); 
+}
+
+
+.pride-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 1.25rem;
 }
