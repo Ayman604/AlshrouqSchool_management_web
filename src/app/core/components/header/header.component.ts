@@ -33,10 +33,10 @@ export class HeaderComponent {
   ];
   readonly navLinks: NavLink[] = [
     { path: '/', label: 'الرئيسية' },
-    { path: '/about', label: 'عن المدرسة' },
+    { path: '/about', label: 'عن المدارس' },
     { path: '/news', label: 'الأخبار والفعاليات' },
     { path: '/gallery', label: 'المعرض' },
-    { path: '/pride', label: 'أبناؤنا فخرنا' },
+    { path: '/pride', label: 'الإنجازات' },
     { path: '/contact', label: 'تواصل معنا' },
     // { path: '/teachersGate/teacher-dashboard', label: 'بوابة المعلمين' },
     // { path: '/studentsGate/student-dashboard', label: 'بوابة الطلاب' }

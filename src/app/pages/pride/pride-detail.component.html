@@ -1,30 +1,40 @@
 <section class="page-section">
   <div class="container detail-container">
-    <a routerLink="/pride" class="back-link"><i class="fa-solid fa-arrow-right"></i> العودة للإنجازات</a>
-
+    <a routerLink="/pride" class="back-link">
+      <i class="fa-solid fa-arrow-right"></i>
+      العودة للإنجازات
+    </a>
     @if (loading()) {
-      <app-content-skeleton [count]="1" variant="list" />
+    <app-content-skeleton [count]="1" variant="list" />
     } @else if (error()) {
-      <div class="state-error" role="alert">{{ error() }}</div>
-    } @else if (item(); as achievement) {
-      <article class="detail-card">
-        <div class="detail-layout">
+    <div class="state-error" role="alert">{{ error() }}</div>
+    } @else if (item(); as pride) {
+  <article class="detail-card">
+    <div class="detail-body">
+      <h1>{{ pride.title }}</h1>
+
+      <time [attr.datetime]="pride.updatedAtUtc">
+        {{ pride.updatedAtUtc | date: 'fullDate' : '' : 'ar' }}
+      </time>
+
+      <div class="detail-media">
+        @for (
+          media of pride.mediaAttachments;
+          track media.mediaId
+        ) {
           <img
-            [src]="mediaUrl(achievement.imageUrl)"
-            [alt]="achievement.title"
+            [src]="mediaUrl(media.filePath)"
+            [alt]="media.altText || pride.title"
             (error)="onImageError($event)"
           />
-          <div>
-            <span class="badge">{{ achievement.academicYear }}</span>
-            @if (achievement.category) {
-              <span class="badge">{{ achievement.category }}</span>
-            }
-            <h1>{{ achievement.title }}</h1>
-            <p class="student">{{ achievement.studentName }}</p>
-            <div class="description">{{ achievement.description }}</div>
-          </div>
-        </div>
-      </article>
-    }
+        }
+      </div>
+
+      <div class="detail-content">
+        {{ cleanContent(pride.content, pride.title) }}
+      </div>
+    </div>
+  </article>
+}
   </div>
 </section>

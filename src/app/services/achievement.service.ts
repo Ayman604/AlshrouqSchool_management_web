@@ -30,7 +30,7 @@ export class AchievementService {
   ): Observable<PaginatedResponse<StudentAchievementListItem>> {
     return this.http.get<PaginatedResponse<StudentAchievementListItem>>(this.baseUrl, {
       params: toHttpParams({
-        pageNumber: query.pageNumber,
+        pageIndex: query.pageIndex,
         pageSize: query.pageSize,
         category: query.category,
         academicYear: query.academicYear

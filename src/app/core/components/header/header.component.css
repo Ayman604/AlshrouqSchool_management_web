@@ -1,155 +1,146 @@
 .site-header {
+  background: #fff;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 18px #0a286b0d;
 }
-
-/* Main Nav */
 .main-nav {
-  background-color: var(--white);
-  padding: 0.5rem 0;
+  min-height: 86px;
+  padding: 0.65rem 0;
 }
-
 .navbar-brand {
-  text-decoration: none;
-  color: var(--primary-green) !important;
+  color: var(--navy) !important;
 }
-
 .logo-icon {
-  font-size: 2rem;
-  width: 70px;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
 }
-
 .logo-icon img {
-  width: 70px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  display: block;
 }
-
 .logo-text {
+  line-height: 1.2;
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
 }
-
 .logo-text strong {
-  font-size: 1.1rem;
   font-weight: 800;
-  color: var(--primary-green);
+  font-size: 1.05rem;
+  color: var(--navy);
 }
-
 .logo-text small {
+  color: #71809b;
   font-size: 0.75rem;
-  color: var(--accent-emerald);
-  font-weight: 500;
 }
-
 .nav-link {
-  color: var(--text-dark) !important;
-  font-weight: 500;
-  padding: 0.5rem 1rem !important;
-  position: relative;
-  transition: color var(--transition);
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-  transform: translateX(50%);
-  width: 0;
-  height: 3px;
-  background-color: var(--accent-green);
-  border-radius: 2px;
-  transition: width var(--transition);
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--primary-green) !important;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 70%;
-}
-
-.btn-register {
-  background-color: var(--primary-green);
-  color: var(--white) !important;
+  color: #30456f !important;
   font-weight: 700;
-  padding: 0.55rem 1.5rem;
-  border-radius: var(--radius);
-  white-space: nowrap;
-  transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  font-size: 0.9rem;
+  padding: 0.6rem 0.7rem !important;
 }
-
-.register-menu { position: relative; }
-.register-options { position: absolute; z-index: 10; left: 0; top: calc(100% + .5rem); min-width: 155px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-md); overflow: hidden; }
-.register-options a { display: block; padding: .7rem 1rem; color: var(--text-dark); text-decoration: none; font-weight: 600; }
-.register-options a:hover { background: #edf8f1; color: var(--primary-green); }
-.portal-actions { display: flex; gap: .5rem; align-items: center; }
-.welcome { color: var(--primary-green); font-size: .82rem; font-weight: 700; white-space: nowrap; }
-.avatar { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; align-items: center; justify-content: center; color: white; background: var(--accent-emerald); }
-.btn-home, .btn-logout { border: 0; border-radius: var(--radius); padding: .45rem .7rem; font-size: .78rem; text-decoration: none; white-space: nowrap; }
-.btn-home { background: #e7f5ec; color: var(--primary-green); }
-.btn-logout { color: white; background: #a83e3e; }
-
-.btn-register:hover,
-.btn-register.active {
-  background-color: var(--accent-emerald);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.nav-link.active,
+.nav-link:hover {
+  color: var(--navy) !important;
 }
-
+.nav-link.active:after {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0.35rem auto -0.35rem;
+}
+.btn-register {
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 800;
+  padding: 0.65rem 1rem;
+  border-radius: 7px;
+}
+.register-menu {
+  position: relative;
+}
+.register-options {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.6rem);
+  width: 150px;
+  background: #fff;
+  padding: 0.4rem;
+  box-shadow: 0 12px 30px #0a286b22;
+  border-radius: 8px;
+}
+.register-options a {
+  display: block;
+  color: var(--navy);
+  font-size: 0.82rem;
+  padding: 0.5rem;
+}
+.register-options a:hover {
+  background: var(--pale-blue);
+}
 .navbar-toggler {
-  border-color: var(--primary-green);
-  
+  border-color: #c8d2e6;
 }
-
 .navbar-toggler-icon {
-  filter: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23004d31' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%230A286B' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
-
-@media (max-width: 991.98px) {
+.portal-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.welcome {
+  font-size: 0.8rem;
+  color: var(--navy);
+}
+.btn-home,
+.btn-logout {
+  border: 0;
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.78rem;
+}
+.btn-home {
+  background: var(--pale-blue);
+  color: var(--navy);
+}
+.btn-logout {
+  background: #fbe8e8;
+  color: #9b3131;
+}
+@media (max-width: 991px) {
   .navbar-nav {
     padding: 1rem 0;
     text-align: center;
   }
-
-  .btn-register {
-    display: block;
-    text-align: center;
-    margin: 0.5rem auto 1rem;
-    width: fit-content;
+  .register-menu {
+    display: flex;
+    justify-content: center;
   }
-  .portal-actions { flex-direction: column; align-items: stretch; margin: .5rem 0; text-align: center; }
+  .register-options {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .portal-actions {
+    flex-direction: column;
+  }
+  .main-nav {
+    min-height: 70px;
+  }
 }
-@media (max-width:767px){
-
-.logo-icon{
-    width:40px;
-    height:40px;
-    font-size:1.5rem;
+@media (max-width: 450px) {
+  .logo-text strong {
+    font-size: 0.9rem;
+  }
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+  }
 }
-
-.logo-text strong{
-    font-size:1rem;
-}
-
-.logo-text small{
-    font-size:.7rem;
-}
-
-
-}
-

@@ -4,6 +4,21 @@
 
     <div class="filters-bar">
       <label>
+  <span>ترتيب حسب</span>
+  <select (change)="onSortChange($event)" [disabled]="loading()">
+    <option value="createdAt">التاريخ</option>
+    <option value="title">العنوان</option>
+  </select>
+</label>
+
+<label>
+  <span>الاتجاه</span>
+  <select (change)="onSortDirectionChange($event)" [disabled]="loading()">
+    <option value="desc">تنازلي</option>
+    <option value="asc">تصاعدي</option>
+  </select>
+</label>
+      <!-- <label>
         <span>النوع</span>
         <select (change)="onContentTypeChange($event)" [disabled]="loading()">
           <option value="">الكل</option>
@@ -19,7 +34,7 @@
           <option value="activities">أنشطة</option>
           <option value="academic">أكاديمي</option>
         </select>
-      </label>
+      </label> -->
     </div>
 
     @if (loading()) {
@@ -40,23 +55,26 @@
           <article class="news-card">
             <a [routerLink]="['/news', item.id]" class="news-card-link">
               <div class="news-cover">
-                <img
+                <!-- <img
                   [src]="mediaUrl(item.coverImageUrl)"
                   [alt]="item.title"
                   loading="lazy"
                   (error)="onImageError($event)"
-                />
-                @if (item.contentType) {
-                  <span class="news-badge">{{ contentTypeLabel(item.contentType) }}</span>
-                }
+                /> -->
+    
+                <!-- @if (item.type === 'Event') {
+                  <span class="news-badge">فعالية</span>
+                } -->
+
+                <img
+                  [src]="mediaUrl(item.mediaAttachments?.[0]?.filePath)"
+                  [alt]="item.title"
+                  loading="lazy"
+                  (error)="onImageError($event)"
+                />              
               </div>
               <div class="news-card-body">
-                @if (item.category) {
-                  <span class="news-category">{{ item.category }}</span>
-                }
                 <h2 class="news-title">{{ item.title }}</h2>
-                <p class="news-desc">{{ item.summary }}</p>
-                <time class="news-date">{{ item.publishedAt | date: 'yyyy/MM/dd' }}</time>
               </div>
             </a>
           </article>

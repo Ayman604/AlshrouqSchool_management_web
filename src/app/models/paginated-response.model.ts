@@ -1,14 +1,12 @@
 export interface PaginatedResponse<T> {
   items: T[];
-  pageNumber: number;
+  pageIndex: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
 }
 
 export interface PaginationParams {
-  pageNumber: number;
+  pageIndex: number;
   pageSize: number;
 }

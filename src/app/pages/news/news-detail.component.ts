@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize, switchMap } from 'rxjs';
 import { NewsService } from '../../services/news.service';
@@ -11,7 +11,7 @@ import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url
 
 @Component({
   selector: 'app-news-detail',
-  imports: [DatePipe, RouterLink, ContentSkeletonComponent],
+  imports: [DatePipe,RouterLink, ContentSkeletonComponent],
   templateUrl: './news-detail.component.html',
   styleUrl: './news-detail.component.css'
 })
@@ -48,7 +48,24 @@ export class NewsDetailComponent {
   mediaUrl(path: string | null | undefined): string {
     return resolveMediaUrl(path, this.apiBaseUrl);
   }
+  
+cleanContent(content: string | null | undefined, title: string): string {
+  if (!content) {
+    return '';
+  }
 
+  let cleaned = content.trim();
+
+  cleaned = cleaned.replace(/^العنوان:\s*/i, '');
+
+  if (cleaned.startsWith(title)) {
+    cleaned = cleaned.slice(title.length).trim();
+  }
+
+  cleaned = cleaned.replace(/^محتوى الخبر:\s*/i, '');
+
+  return cleaned.trim();
+}
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = placeholderImageUrl();
   }

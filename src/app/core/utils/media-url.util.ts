@@ -10,9 +10,16 @@ export function resolveMediaUrl(
   if (/^https?:\/\//i.test(path)) {
     return path;
   }
-  const base = apiBaseUrl.replace(/\/$/, '');
+  // const base = apiBaseUrl.replace(/\/$/, '');
+  // const normalized = path.startsWith('/') ? path : `/${path}`;
+  // return `${base}${normalized}`;
+  const mediaBaseUrl = apiBaseUrl
+    .replace(/\/api\/?$/, '')
+    .replace(/\/$/, '');
+
   const normalized = path.startsWith('/') ? path : `/${path}`;
-  return `${base}${normalized}`;
+
+  return `${mediaBaseUrl}${normalized}`;
 }
 
 export function placeholderImageUrl(): string {

@@ -7,23 +7,31 @@
     } @else if (error()) {
       <div class="state-error" role="alert">{{ error() }}</div>
     } @else if (item(); as news) {
-      <article class="detail-card">
-        <div class="detail-cover">
+
+<article class="detail-card">
+    <div class="detail-body">
+      <h1>{{ news.title }}</h1>
+
+      <time [attr.datetime]="news.createdAtUtc">
+        {{ news.createdAtUtc | date: 'fullDate' : '' : 'ar' }}
+      </time>
+
+      <div class="detail-media">
+        @for (media of news.mediaAttachments; track media.mediaId) {
           <img
-            [src]="mediaUrl(news.coverImageUrl)"
-            [alt]="news.title"
+            [src]="mediaUrl(media.filePath)"
+            [alt]="media.altText || news.title"
             (error)="onImageError($event)"
           />
-        </div>
-        <div class="detail-body">
-          @if (news.category) {
-            <span class="detail-category">{{ news.category }}</span>
-          }
-          <h1>{{ news.title }}</h1>
-          <time>{{ news.publishedAt | date: 'fullDate' : '' : 'ar' }}</time>
-          <div class="detail-content">{{ news.body }}</div>
-        </div>
-      </article>
+        }
+      </div>
+
+      <div class="detail-content">
+        {{ cleanContent(news.content, news.title) }}
+      </div>
+    </div>
+  </article>
+
     }
   </div>
 </section>

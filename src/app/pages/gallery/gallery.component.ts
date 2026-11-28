@@ -22,15 +22,12 @@ export class GalleryComponent {
   private readonly refreshPage = new Subject<void>();
 
   readonly items = signal<GalleryMedia[]>([]);
-  readonly albums = signal<GalleryAlbum[]>([]);
   readonly loading = signal(true);
-  readonly albumsLoading = signal(true);
   readonly error = signal<string | null>(null);
-  readonly pageNumber = signal(1);
+  readonly pageIndex = signal(1);
   readonly pageSize = signal(12);
   readonly totalPages = signal(0);
   readonly totalCount = signal(0);
-  readonly albumFilter = signal<number | ''>('');
   readonly preview = signal<GalleryMedia | null>(null);
 
   readonly apiBaseUrl = environment.apiUrl;
@@ -45,21 +42,18 @@ export class GalleryComponent {
         switchMap(() =>
           this.galleryService
             .getPage({
-              pageNumber: this.pageNumber(),
-              pageSize: this.pageSize(),
-              albumId: this.albumFilter() === '' ? undefined : Number(this.albumFilter())
+              pageIndex: this.pageIndex(),
+              pageSize: this.pageSize()
             })
             .pipe(
               catchError(() => {
                 this.error.set('تعذّر تحميل المعرض. يرجى المحاولة لاحقاً.');
                 return of({
                   items: [],
-                  pageNumber: this.pageNumber(),
+                  pageIndex: this.pageIndex(),
                   pageSize: this.pageSize(),
                   totalCount: 0,
                   totalPages: 0,
-                  hasPreviousPage: false,
-                  hasNextPage: false
                 } satisfies PaginatedResponse<GalleryMedia>);
               }),
               finalize(() => this.loading.set(false))
@@ -69,22 +63,21 @@ export class GalleryComponent {
       )
       .subscribe(response => {
         this.items.set(response.items);
-        this.pageNumber.set(response.pageNumber);
+        this.pageIndex.set(response.pageIndex);
         this.totalPages.set(response.totalPages);
         this.totalCount.set(response.totalCount);
       });
 
-    this.loadAlbums();
-    this.loadPage();
+        this.loadPage();
   }
 
-  mediaUrl(path: string | null | undefined): string {
-    return resolveMediaUrl(path, this.apiBaseUrl);
-  }
+  // mediaUrl(path: string | null | undefined): string {
+  //   return resolveMediaUrl(path, this.apiBaseUrl);
+  // }
 
-  thumbnailUrl(item: GalleryMedia): string {
-    return resolveMediaUrl(item.thumbnailUrl ?? item.url, this.apiBaseUrl);
-  }
+  // thumbnailUrl(item: GalleryMedia): string {
+  //   return resolveMediaUrl(item.thumbnailUrl ?? item.url, this.apiBaseUrl);
+  // }
 
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = placeholderImageUrl();
@@ -92,19 +85,18 @@ export class GalleryComponent {
 
   onAlbumChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
-    this.albumFilter.set(value ? Number(value) : '');
-    this.pageNumber.set(1);
+    this.pageIndex.set(1);
     this.loadPage();
   }
 
   onPageChange(page: number): void {
-    this.pageNumber.set(page);
+    this.pageIndex.set(page);
     this.loadPage();
   }
 
   onPageSizeChange(size: number): void {
     this.pageSize.set(size);
-    this.pageNumber.set(1);
+    this.pageIndex.set(1);
     this.loadPage();
   }
 
@@ -116,19 +108,6 @@ export class GalleryComponent {
     this.preview.set(null);
   }
 
-  private loadAlbums(): void {
-    this.albumsLoading.set(true);
-    this.galleryService
-      .getAlbums()
-      .pipe(
-        finalize(() => this.albumsLoading.set(false)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe({
-        next: albums => this.albums.set(albums),
-        error: () => this.albums.set([])
-      });
-  }
 
   private loadPage(): void {
     this.refreshPage.next();
