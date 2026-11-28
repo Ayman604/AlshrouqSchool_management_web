@@ -2,8 +2,8 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Subject, catchError, finalize, of, switchMap, tap } from 'rxjs';
-import { AchievementService } from '../../services/achievement.service';
-import { StudentAchievementListItem } from '../../models/achievement.model';
+import { PrideService } from '../../services/pride.service';
+import { NewsListItem } from '../../models/news.model';
 import { PaginatedResponse } from '../../models/paginated-response.model';
 import { PaginationComponent } from '../../core/components/pagination/pagination.component';
 import { ContentSkeletonComponent } from '../../core/components/content-skeleton/content-skeleton.component';
@@ -14,14 +14,14 @@ import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url
   selector: 'app-pride',
   imports: [RouterLink, PaginationComponent, ContentSkeletonComponent],
   templateUrl: './pride.component.html',
-  styleUrl: './pride.component.css'
+  styleUrl: './pride.component.css',
 })
 export class PrideComponent {
-  private readonly achievementService = inject(AchievementService);
+  private readonly prideService = inject(PrideService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly refreshPage = new Subject<void>();
 
-  readonly items = signal<StudentAchievementListItem[]>([]);
+  readonly items = signal<NewsListItem[]>([]);
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly pageNumber = signal(1);
@@ -30,6 +30,8 @@ export class PrideComponent {
   readonly totalCount = signal(0);
   readonly categoryFilter = signal('');
   readonly yearFilter = signal('');
+  readonly sortBy = signal<'title' | 'updatedAtUtc'>('updatedAtUtc');
+  readonly sortDirection = signal<'asc' | 'desc'>('desc');
 
   readonly apiBaseUrl = environment.apiUrl;
 
@@ -41,31 +43,31 @@ export class PrideComponent {
           this.error.set(null);
         }),
         switchMap(() =>
-          this.achievementService
+          this.prideService
             .getPage({
               pageIndex: this.pageNumber(),
               pageSize: this.pageSize(),
-              category: this.categoryFilter() || undefined,
-              academicYear: this.yearFilter() || undefined
+              sortBy: this.sortBy(),
+              sortDirection: this.sortDirection(),
             })
             .pipe(
               catchError(() => {
-                // this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
+                this.error.set('تعذّر تحميل الإنجازات. يرجى المحاولة لاحقاً.');
+
                 return of({
                   items: [],
                   pageIndex: this.pageNumber(),
                   pageSize: this.pageSize(),
                   totalCount: 0,
                   totalPages: 0,
-                  
-                } satisfies PaginatedResponse<StudentAchievementListItem>);
+                } satisfies PaginatedResponse<NewsListItem>);
               }),
-              finalize(() => this.loading.set(false))
-            )
+              finalize(() => this.loading.set(false)),
+            ),
         ),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         this.items.set(response.items);
         this.pageNumber.set(response.pageIndex);
         this.totalPages.set(response.totalPages);
@@ -83,14 +85,16 @@ export class PrideComponent {
     (event.target as HTMLImageElement).src = placeholderImageUrl();
   }
 
-  onCategoryChange(event: Event): void {
-    this.categoryFilter.set((event.target as HTMLSelectElement).value);
+  onSortChange(event: Event): void {
+    this.sortBy.set((event.target as HTMLSelectElement).value as 'title' | 'updatedAtUtc');
+
     this.pageNumber.set(1);
     this.loadPage();
   }
 
-  onYearChange(event: Event): void {
-    this.yearFilter.set((event.target as HTMLSelectElement).value);
+  onSortDirectionChange(event: Event): void {
+    this.sortDirection.set((event.target as HTMLSelectElement).value as 'asc' | 'desc');
+
     this.pageNumber.set(1);
     this.loadPage();
   }

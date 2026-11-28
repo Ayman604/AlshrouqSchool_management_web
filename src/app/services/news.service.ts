@@ -6,10 +6,17 @@ import { PaginatedResponse, PaginationParams } from '../models/paginated-respons
 import { environment } from '../../environments/environment';
 import { toHttpParams } from '../core/utils/http-params.util';
 
+export type NewsSortField = 'createdAt' | 'title';
+export type SortDirection = 'asc' | 'desc';
+
 export interface NewsQuery extends PaginationParams {
-  category?: string;
-  contentType?: 'News' | 'Event';
+  sortBy?: NewsSortField;
+  sortDirection?: SortDirection;
 }
+// export interface NewsQuery extends PaginationParams {
+//   category?: string;
+//   contentType?: 'News' | 'Event';
+// }
 
 /**
  * Backend contract (ASP.NET Core):
@@ -30,8 +37,8 @@ export class NewsService {
       params: toHttpParams({
         pageNumber: query.pageIndex,
         pageSize: query.pageSize,
-        category: query.category,
-        contentType: query.contentType
+        sortBy: query.sortBy,
+        sortDirection: query.sortDirection
       })
     });
   }

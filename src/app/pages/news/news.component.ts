@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subject, catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { NewsService } from '../../services/news.service';
@@ -13,7 +12,7 @@ import { placeholderImageUrl, resolveMediaUrl } from '../../core/utils/media-url
 
 @Component({
   selector: 'app-news',
-  imports: [DatePipe, RouterLink, PaginationComponent, ContentSkeletonComponent],
+  imports: [RouterLink, PaginationComponent, ContentSkeletonComponent],
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })
@@ -31,7 +30,8 @@ export class NewsComponent {
   readonly totalCount = signal(0);
   readonly categoryFilter = signal('');
   readonly contentTypeFilter = signal<'News' | 'Event' | ''>('');
-
+readonly sortBy = signal<'createdAt' | 'title'>('createdAt');
+readonly sortDirection = signal<'asc' | 'desc'>('desc');
   readonly apiBaseUrl = environment.apiUrl;
 
   constructor() {
@@ -46,8 +46,8 @@ export class NewsComponent {
             .getPage({
               pageIndex: this.pageNumber(),
               pageSize: this.pageSize(),
-              category: this.categoryFilter() || undefined,
-              contentType: this.contentTypeFilter() || undefined
+              sortBy: this.sortBy(),
+              sortDirection: this.sortDirection()
             })
             .pipe(
               catchError(() => {
@@ -97,7 +97,23 @@ export class NewsComponent {
     this.pageNumber.set(1);
     this.loadPage();
   }
+  onSortChange(event: Event): void {
+  this.sortBy.set(
+    (event.target as HTMLSelectElement).value as 'createdAt' | 'title'
+  );
 
+  this.pageNumber.set(1);
+  this.loadPage();
+}
+
+onSortDirectionChange(event: Event): void {
+  this.sortDirection.set(
+    (event.target as HTMLSelectElement).value as 'asc' | 'desc'
+  );
+
+  this.pageNumber.set(1);
+  this.loadPage();
+}
   onPageChange(page: number): void {
     this.pageNumber.set(page);
     this.loadPage();
@@ -109,9 +125,9 @@ export class NewsComponent {
     this.loadPage();
   }
 
-  contentTypeLabel(type: NewsListItem['contentType']): string {
-    return type === 'Event' ? 'فعالية' : 'خبر';
-  }
+  // contentTypeLabel(type: NewsListItem['contentType']): string {
+  //   return type === 'Event' ? 'فعالية' : 'خبر';
+  // }
 
   private loadPage(): void {
     this.refreshPage.next();
